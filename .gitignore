@@ -1,0 +1,43 @@
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Poids de modèles (téléchargés ou entraînés, jamais versionnés)
+models/*.pt
+models/*.onnx
+models/finetuned/
+
+# Jeu de données téléchargé et sa conversion.
+# Plusieurs giga-octets, entièrement régénérables : le jeu se retélécharge et
+# l'import se rejoue à partir de configs/import.yaml, qui lui est versionné.
+data/raw/
+data/dataset/
+data/outputs/
+
+# Sorties d'entraînement et d'évaluation.
+# results/comparaison.* est le livrable du rapport : on le garde.
+results/entrainements/
+runs/
+*.cache
+
+# Vues temporaires créées par scripts/evaluate.py
+_vue_coco_*
+
+# Système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Fichiers temporaires bureautiques
+~$*
+
+# Claude
+.claude/

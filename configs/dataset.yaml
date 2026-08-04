@@ -1,0 +1,23 @@
+# Configuration du jeu de donnees au format Ultralytics.
+#
+# Genere par scripts/import_dataset.py.
+# Ne pas editer a la main : les modifications seront perdues.
+#
+# Les 4 classes sont alignees sur des classes COCO afin que le modele
+# pre-entraine et le modele fine-tune soient comparables sur le meme
+# jeu de test (voir LOCAL_VERS_COCO dans scripts/evaluate.py) :
+#   voiture -> COCO 2  (car)
+#   moto    -> COCO 3  (motorcycle)
+#   bus     -> COCO 5  (bus)
+#   camion  -> COCO 7  (truck)
+
+path: ../data/dataset
+train: train/images
+val: val/images
+test: test/images
+
+names:
+  0: voiture
+  1: moto
+  2: bus
+  3: camion

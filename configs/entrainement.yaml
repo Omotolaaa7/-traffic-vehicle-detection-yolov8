@@ -1,0 +1,36 @@
+# Hyperparamètres du fine-tuning de YOLOv8.
+# Lu par scripts/train_yolo.py. Aucun seuil ne doit être codé en dur ailleurs.
+
+# Modèle de départ. yolov8n sur machine modeste, yolov8s sur Colab T4.
+modele_base: models/yolov8n.pt
+
+# Découpage du dataset
+donnees: configs/dataset.yaml
+
+# Boucle d'entraînement
+epochs: 50
+taille_image: 640
+batch: 16
+patience: 15          # arrêt anticipé si aucune amélioration
+device: ""            # "" laisse Ultralytics choisir, "cpu" force le CPU, "0" le GPU
+workers: 4
+seed: 42              # reproductibilité, indispensable pour comparer deux runs
+
+# Sorties
+projet: results/entrainements
+nom_run: yolov8n_benin
+
+# Augmentation des données.
+# Le sujet cible les véhicules éloignés et de petite taille : `scale` élevé et
+# mosaic génèrent davantage de petits objets à l'entraînement, c'est le levier
+# d'augmentation le plus directement lié à la problématique.
+augmentation:
+  mosaic: 1.0         # assemble 4 images, réduit la taille apparente des objets
+  scale: 0.7          # zoom aléatoire +/- 70 %
+  fliplr: 0.5
+  flipud: 0.0         # pas de retournement vertical : la scène routière a un haut et un bas
+  hsv_h: 0.015
+  hsv_s: 0.7
+  hsv_v: 0.4          # variations de luminosité, utile en plein soleil et à l'ombre
+  translate: 0.1
+  degrees: 0.0        # caméra fixe, pas de rotation

@@ -1,0 +1,43 @@
+# Import d'un jeu de donnees telecharge.
+# Lu par scripts/import_dataset.py.
+
+# Dossier du jeu telecharge et decompresse. Il doit contenir un data.yaml
+# (export Roboflow, Kaggle ou tout export au format YOLO).
+source: data/raw/dataset_telecharge
+
+# Correspondance entre les classes du jeu telecharge et nos 4 classes.
+#
+# A gauche : le nom exact tel qu'il figure dans le data.yaml du jeu source.
+# A droite : voiture, moto, bus, camion, ou `ignorer`.
+#
+# Toute classe source absente de cette liste est signalee au lancement et
+# ignoree. Lancez le script une premiere fois : il affiche la liste des classes
+# reellement presentes dans votre jeu, que vous n'avez plus qu'a recopier ici.
+#
+# L'exemple ci-dessous couvre les noms les plus courants. Adaptez-le.
+correspondance:
+  car: voiture
+  Car: voiture
+  auto: voiture
+  van: voiture
+
+  motorcycle: moto
+  motorbike: moto
+  motor: moto
+  bike: moto
+
+  bus: bus
+  Bus: bus
+  minibus: bus
+
+  truck: camion
+  Truck: camion
+  lorry: camion
+
+  # Classes frequentes dans les jeux de trafic dense, sans equivalent COCO.
+  # Les conserver fausserait la comparaison avec le modele pre-entraine.
+  rickshaw: ignorer
+  auto-rickshaw: ignorer
+  bicycle: ignorer
+  person: ignorer
+  pedestrian: ignorer
