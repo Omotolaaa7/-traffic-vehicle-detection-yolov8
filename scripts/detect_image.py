@@ -4,9 +4,9 @@ Sert a produire les visuels qualitatifs du rapport : la meme image passee dans
 le modele pre-entraine puis dans le modele fine-tune, cote a cote.
 
 Usage :
-    python scripts/detect_image.py
-    python scripts/detect_image.py data/raw/embouteillages2.jpg
-    python scripts/detect_image.py data/raw/ --model models/finetuned/yolov8n_benin.pt
+    python scripts/detect_image.py chemin/vers/photo.jpg
+    python scripts/detect_image.py data/dataset/test/images/
+    python scripts/detect_image.py photo.jpg --model models/finetuned/yolov8n_benin.pt
 """
 
 import argparse
@@ -16,7 +16,6 @@ from ultralytics import YOLO
 
 RACINE = Path(__file__).resolve().parent.parent
 MODELE_DEFAUT = RACINE / "models" / "yolov8n.pt"
-ENTREE_DEFAUT = RACINE / "data" / "raw" / "embouteillages1.jpg"
 SORTIE_DEFAUT = RACINE / "data" / "outputs"
 
 EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp"}
@@ -36,8 +35,8 @@ def lister_images(entree: Path) -> list[Path]:
 
 def main() -> None:
     parseur = argparse.ArgumentParser(description=__doc__)
-    parseur.add_argument("entree", nargs="?", type=Path, default=ENTREE_DEFAUT,
-                         help="image ou dossier d'images")
+    parseur.add_argument("entree", type=Path,
+                         help="image ou dossier d'images a annoter")
     parseur.add_argument("--model", type=Path, default=MODELE_DEFAUT)
     parseur.add_argument("--out", type=Path, default=SORTIE_DEFAUT)
     parseur.add_argument("--conf", type=float, default=0.25)

@@ -18,7 +18,7 @@ remplir configs/import.yaml.
 
 Usage :
     python scripts/import_dataset.py
-    python scripts/import_dataset.py --source data/raw/mon_dataset
+    python scripts/import_dataset.py --source data/raw/bmd45_subset
 """
 
 import argparse

@@ -187,6 +187,11 @@ def rappel_par_taille(modele: YOLO, dossier_split: Path, device: str) -> tuple[d
     compte = {nom: {"total": 0, "detecte": 0} for nom, _, _ in BORNES_TAILLE}
     duree_totale = 0.0
 
+    # Echauffement : le premier appel paie l'initialisation du modele et du
+    # device ; il ne doit pas entrer dans la mesure du debit.
+    modele.predict(str(images[0]), conf=SEUIL_CONFIANCE, classes=classes,
+                   device=device, verbose=False)
+
     for chemin in images:
         debut = time.perf_counter()
         prediction = modele.predict(

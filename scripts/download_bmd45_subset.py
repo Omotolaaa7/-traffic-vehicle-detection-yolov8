@@ -111,6 +111,28 @@ def yolo_line(category_id: int, bbox_xywh: list[float], width: int, height: int)
     return f"{category_id} {cx:.6f} {cy:.6f} {nw:.6f} {nh:.6f}"
 
 
+def compter_paires_completes(
+    images_dir: Path, labels_dir: Path, split_name: str, image_format: str
+) -> int:
+    """Compte les paires image+label deja exportees lors d'une session precedente.
+
+    Les fichiers sont nommes sequentiellement : on avance tant que la paire est
+    complete. Une paire incomplete (interruption entre l'ecriture de l'image et
+    celle du label) est supprimee pour repartir d'un etat propre.
+    """
+    n = 0
+    while True:
+        stem = f"{split_name}_{n:06d}"
+        image = images_dir / f"{stem}.{image_format}"
+        label = labels_dir / f"{stem}.txt"
+        if image.exists() and label.exists():
+            n += 1
+            continue
+        image.unlink(missing_ok=True)
+        label.unlink(missing_ok=True)
+        return n
+
+
 def export_split(
     repo: str,
     hf_split: str,
@@ -126,13 +148,25 @@ def export_split(
     images_dir.mkdir(parents=True, exist_ok=True)
     labels_dir.mkdir(parents=True, exist_ok=True)
 
+    # Reprise apres interruption : les paires deja presentes sont conservees.
+    # Le flux etant melange avec la meme graine, l'ordre des echantillons est
+    # identique d'une session a l'autre : on saute ceux deja exportes.
+    deja = compter_paires_completes(images_dir, labels_dir, split_name, image_format)
+    if deja >= n_images:
+        print(f"{split_name}: deja complet ({deja}/{n_images}), rien a telecharger")
+        return deja
+    if deja:
+        print(f"{split_name}: reprise, {deja}/{n_images} images deja presentes")
+
     ds = load_dataset(repo, split=hf_split, streaming=True)
     ds = ds.shuffle(seed=seed, buffer_size=shuffle_buffer)
 
-    count = 0
+    count = deja
     for i, sample in enumerate(ds):
         if count >= n_images:
             break
+        if i < deja:
+            continue
 
         image = sample["image"]
         objects = sample["objects"]
@@ -142,7 +176,12 @@ def export_split(
         image_path = images_dir / f"{stem}.{image_format}"
         label_path = labels_dir / f"{stem}.txt"
 
-        image.save(image_path)
+        if image_format == "jpg":
+            # PIL re-encode a l'enregistrement ; la qualite par defaut (~75)
+            # degraderait visiblement les petits objets, coeur du sujet.
+            image.save(image_path, quality=95)
+        else:
+            image.save(image_path)
 
         bboxes = objects.get("bbox", [])
         categories = extract_categories(objects)
@@ -201,7 +240,7 @@ def main() -> None:
     print("\nExport val...")
     n_val = export_split(
         repo=args.repo,
-        hf_split="validation",
+        hf_split="val",
         split_name="val",
         n_images=args.val,
         seed=args.seed + 1,
