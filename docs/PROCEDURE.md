@@ -66,13 +66,77 @@ pip install -r requirements.txt
 Vérification immédiate :
 
 ```bash
-python scripts/detect_image.py data/raw/
+python -c "from ultralytics import YOLO; print(YOLO('models/yolov8n.pt').names[2])"
 ```
 
-Trois images annotées doivent apparaître dans `data/outputs/`. Si c'est le cas,
-l'installation est bonne.
+La commande doit afficher `car`. Si c'est le cas, l'installation est bonne.
 
 **Durée** : 20 minutes.
+
+---
+
+## Travailler sur Google Colab et récupérer les résultats
+
+Alternative à l'installation locale, recommandée si votre machine n'a pas de
+GPU ou si le téléchargement du jeu de données est trop lent chez vous. Le
+notebook [notebooks/colab_entrainement.ipynb](../notebooks/colab_entrainement.ipynb)
+exécute automatiquement les étapes 1 à 5 de cette procédure sur une machine
+Google, et chaque membre du groupe peut ainsi obtenir les résultats de son
+côté, sans rien installer.
+
+### Lancer le notebook
+
+1. Ouvrir [colab.research.google.com](https://colab.research.google.com),
+   se connecter avec un compte Google.
+2. Onglet **GitHub**, coller l'adresse du dépôt
+   (`https://github.com/Omotolaaa7/-traffic-vehicle-detection-yolov8`), puis
+   choisir `notebooks/colab_entrainement.ipynb`.
+3. Menu *Exécution > Modifier le type d'exécution*, sélectionner **GPU T4**.
+4. Exécuter les cellules **dans l'ordre**, de haut en bas. La cellule Drive
+   demande une autorisation d'accès : l'accepter, c'est ce qui permet de
+   conserver les résultats.
+
+Ordres de grandeur : une dizaine de minutes pour le téléchargement du jeu,
+environ une heure pour l'entraînement, 20 à 40 minutes pour la comparaison.
+La session peut être fermée entre-temps tant que la dernière cellule de
+sauvegarde a été exécutée.
+
+### Où sont les résultats
+
+La dernière cellule copie tout dans votre Google Drive, dossier
+`MyDrive/Projet1_AMA/` :
+
+| Fichier sur Drive | Ce que c'est | Livrable alimenté |
+|---|---|---|
+| `results/comparaison.md`, `.csv`, `.json` | Le tableau comparatif pré-entraîné / fine-tuné | L'article (section Résultats) et les slides |
+| `results/eval_*.json` | Les métriques détaillées de chaque modèle | L'article (section Résultats) |
+| `results/entrainements/.../results.png` | Les courbes d'entraînement | L'article et l'annexe technique |
+| `finetuned/yolov8n_benin.pt` | Les poids du modèle fine-tuné | L'application Streamlit et les visuels |
+
+Pour les récupérer : [drive.google.com](https://drive.google.com), dossier
+`Projet1_AMA`, clic droit puis *Télécharger*. Placer ensuite
+`yolov8n_benin.pt` dans `models/finetuned/` de votre copie locale du dépôt :
+l'application Streamlit et `scripts/detect_image.py` le trouveront à cet
+emplacement.
+
+### Se partager les résultats à trois
+
+Deux organisations possibles :
+
+- **Chacun exécute le notebook.** Tout est reproductible (graine 42, mêmes
+  hyperparamètres) : chacun obtient les mêmes splits et des chiffres
+  identiques ou quasi identiques. C'est la voie la plus simple, chaque membre
+  est autonome pour produire sa partie des livrables.
+- **Un seul exécute, les autres récupèrent.** La personne qui a lancé le
+  notebook partage son dossier Drive `Projet1_AMA` (clic droit, *Partager*,
+  ajouter les adresses des coéquipiers). Les autres téléchargent le tableau
+  comparatif et les poids sans rien exécuter. Utile pour ne payer qu'une fois
+  le temps d'entraînement.
+
+Dans les deux cas, **les chiffres cités dans l'article et les slides doivent
+provenir d'un seul et même run**, celui que le groupe désigne comme
+définitif. Mélanger les chiffres de deux exécutions différentes dans un même
+tableau serait incohérent.
 
 ---
 
@@ -255,8 +319,8 @@ protocole.
 **Diapositives 5 et 7.** Un jury retient une image avant un tableau.
 
 ```bash
-python scripts/detect_image.py data/raw/ --model models/yolov8n.pt
-python scripts/detect_image.py data/raw/ --model models/finetuned/yolov8n_benin.pt
+python scripts/detect_image.py data/dataset/test/images/nom_image.jpg --model models/yolov8n.pt
+python scripts/detect_image.py data/dataset/test/images/nom_image.jpg --model models/finetuned/yolov8n_benin.pt
 ```
 
 Les fichiers sont suffixés du nom du modèle, ce qui permet de les mettre côte à
@@ -264,10 +328,14 @@ côte sur une slide.
 
 Choisissez **une seule image**, celle où la différence est la plus nette :
 typiquement un embouteillage avec beaucoup de véhicules au fond. Un avant / après
-sur une image bien choisie vaut mieux que six comparaisons moyennes.
+sur une image bien choisie vaut mieux que six comparaisons moyennes. Parcourez
+`data/dataset/test/images/` pour repérer une scène dense, puis passez son
+chemin aux deux commandes.
 
-Les trois photos d'embouteillage déjà présentes dans `data/raw/` conviennent
-pour cet usage, même si elles ne servent pas à l'entraînement.
+Vos propres photos d'embouteillage (prises à Cotonou par exemple) conviennent
+aussi pour cet usage, même si elles ne servent pas à l'entraînement : c'est
+encore plus parlant devant un jury. Pensez à flouter plaques et visages sur
+toute capture destinée aux slides.
 
 **Durée** : 30 minutes.
 
@@ -338,9 +406,13 @@ jeu de test séparé, il n'y a pas de résultat, seulement une démonstration.
 ## Récapitulatif des commandes
 
 ```bash
-python scripts/detect_image.py data/raw/                          # vérifier l'installation
+python scripts/download_bmd45_subset.py --train 2400 --val 600 --seed 42   # télécharger le jeu
 python scripts/import_dataset.py                                  # importer le jeu téléchargé
 python scripts/evaluate.py --model models/yolov8n.pt              # mesurer la référence
 python scripts/train_yolo.py                                      # entraîner
 python scripts/compare_models.py                                  # comparer
+python scripts/detect_image.py chemin/image.jpg                   # visuels qualitatifs
 ```
+
+Ou, pour tout exécuter sur Google Colab : ouvrir
+`notebooks/colab_entrainement.ipynb` (voir la section dédiée plus haut).

@@ -75,11 +75,15 @@ Projet1/
 │   ├── train_yolo.py           # fine-tuning
 │   ├── evaluate.py             # métriques d'un modèle
 │   └── compare_models.py       # pré-entraîné contre fine-tuné
+├── notebooks/
+│   └── colab_entrainement.ipynb  # chaîne complète sur Google Colab (GPU gratuit)
 ├── results/                    # métriques et tableaux comparatifs
 └── docs/
     ├── STRUCTURE.md            # rôle de chaque dossier et de chaque fichier
     ├── PROCEDURE.md            # marche à suivre, étape par étape
     ├── DATASETS.md             # jeux de données candidats et critères de choix
+    ├── GUIDE_STREAMLIT.md      # construire l'application de démonstration
+    ├── GUIDE_ARTICLE_LATEX.md  # rédiger l'article scientifique avec LaTeX
     └── ressources/             # rapport technique, sujet, présentations
 ```
 
@@ -112,14 +116,22 @@ Pour éviter de télécharger tout le jeu, utilisez ce script qui crée un sous-
 python scripts/download_bmd45_subset.py --train 2400 --val 600 --seed 42
 ```
 
-Il écrit dans `data/raw/bmd45_subset/`, puis vous pouvez lancer l'import du projet avec `scripts/import_dataset.py`.
+Il écrit dans `data/raw/bmd45_subset/`, puis vous pouvez lancer l'import du projet avec `scripts/import_dataset.py`. Interrompu puis relancé, le script reprend là où il s'était arrêté sans retélécharger les images déjà présentes.
 
 Pour un guide très simple, destiné à des débutants en vision par ordinateur, voir [docs/COMMENCER.md](docs/COMMENCER.md).
+
+### Tout exécuter sur Google Colab (recommandé si machine modeste)
+
+Le notebook [notebooks/colab_entrainement.ipynb](notebooks/colab_entrainement.ipynb)
+déroule toute la chaîne (téléchargement, import, fine-tuning sur GPU T4,
+comparaison) et sauvegarde poids et résultats sur Google Drive. L'ouvrir via
+`colab.research.google.com` → GitHub → ce dépôt, puis activer le GPU
+(*Exécution → Modifier le type d'exécution*).
 
 ### Vérifier l'installation, détection qualitative
 
 ```bash
-python scripts/detect_image.py data/raw/
+python scripts/detect_image.py data/dataset/test/images/
 ```
 
 Écrit une image annotée par entrée dans `data/outputs/`, suffixée du nom du
