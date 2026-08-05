@@ -134,6 +134,7 @@ projet, ils doivent survivre à un changement de machine.
 | `STRUCTURE.md` | Ce document. |
 | `PROCEDURE.md` | La marche à suivre, étape par étape, pour mener le projet à son terme. |
 | `DATASETS.md` | Les jeux de données candidats, leurs caractéristiques et leurs licences. |
+| `COMMENCER.md` | Guide simple pour débutants : quoi faire, dans quel ordre, sans jargon compliqué. |
 | `ressources/` | Les documents sources : sujet, rapport technique, présentations. Documents de référence, pas de la documentation de code. |
 
 ---

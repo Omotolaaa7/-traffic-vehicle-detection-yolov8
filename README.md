@@ -104,6 +104,18 @@ télécharge sinon au premier appel, ce qui nécessite une connexion.
 
 ## 7. Utilisation
 
+### Télécharger un sous-ensemble BMD-45 pour travailler en local
+
+Pour éviter de télécharger tout le jeu, utilisez ce script qui crée un sous-ensemble local d'environ 3 000 images :
+
+```bash
+python scripts/download_bmd45_subset.py --train 2400 --val 600 --seed 42
+```
+
+Il écrit dans `data/raw/bmd45_subset/`, puis vous pouvez lancer l'import du projet avec `scripts/import_dataset.py`.
+
+Pour un guide très simple, destiné à des débutants en vision par ordinateur, voir [docs/COMMENCER.md](docs/COMMENCER.md).
+
 ### Vérifier l'installation, détection qualitative
 
 ```bash

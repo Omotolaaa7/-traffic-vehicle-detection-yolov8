@@ -93,7 +93,9 @@ précisément :
 | **Classes proches de COCO** | Condition de validité de la comparaison | Voiture, moto, bus, camion doivent exister |
 
 Téléchargez le jeu au **format YOLOv8** et décompressez-le dans `data/raw/`.
-Roboflow, Kaggle et Hugging Face proposent tous cet export.
+Si vous utilisez BMD-45 sur Hugging Face, ne récupérez pas tout le dépôt : le script [scripts/download_bmd45_subset.py](../scripts/download_bmd45_subset.py) extrait un sous-ensemble local de 3 000 images environ.
+
+Pour les nouveaux membres du groupe, un guide très simple est aussi disponible dans [docs/COMMENCER.md](COMMENCER.md).
 
 **Deux vérifications avant d'aller plus loin :**
 
