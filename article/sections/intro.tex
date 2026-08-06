@@ -1,0 +1,68 @@
+\section{Introduction}\label{sec-intro}
+
+\paragraph{Contexte.}
+La République du Bénin a engagé la mise en place d'un système national
+de vidéoprotection couvrant cinq villes et les postes
+frontaliers, décidée en Conseils des Ministres du 11 mars et du 3 juin
+2026~\cite{sgg2026conseil}. Au-delà de la sécurité publique, un tel
+réseau de caméras ouvre la voie à la vidéo-verbalisation : un pipeline
+de vision par ordinateur qui enchaîne détection des véhicules, suivi
+multi-objets, détection de plaque d'immatriculation, reconnaissance
+optique de caractères, application de règles d'infraction et restitution
+sur tableau de bord.
+
+\paragraph{Problème.}
+Tout ce pipeline repose sur son premier maillon : si un véhicule n'est
+pas détecté, rien en aval ne peut le rattraper. Or les détecteurs
+génériques, pré-entraînés sur des jeux comme COCO~\cite{lin2014coco},
+échouent précisément dans les configurations les plus fréquentes du
+trafic urbain ouest-africain : véhicules éloignés de la caméra donc de
+petite taille à l'image, et véhicules partiellement masqués dans les
+embouteillages. Les auteurs de BMD-45~\cite{sharma2026bmd45} quantifient
+cet écart de domaine : des détecteurs entraînés sur le benchmark
+UA-DETRAC~\cite{wen2020uadetrac} plafonnent à $33{,}6\,\%$ de
+mAP@0,5:0,95 sur du trafic urbain dense de pays en développement, contre
+$83{,}8\,\%$ pour des modèles entraînés en domaine, soit un facteur
+$2{,}5$.
+
+\paragraph{Périmètre et question de recherche.}
+Ce travail se restreint volontairement au premier maillon, la détection
+de véhicules, et à l'intérieur de celui-ci à un verrou précis : les
+véhicules éloignés, de petite taille ou masqués. Le suivi multi-objets,
+la lecture de plaques, les règles d'infraction et l'estimation de
+vitesse sont hors périmètre. La question de recherche est la suivante :
+\emph{un fine-tuning de YOLOv8 sur du trafic urbain dense améliore-t-il
+la détection des véhicules, et spécifiquement celle des véhicules de
+petite taille ?} Aucun jeu de données public de vision par ordinateur
+n'existant pour le Bénin, l'étude s'appuie sur BMD-45, un jeu de trafic
+urbain indien structurellement comparable (caméras CCTV fixes, forte
+densité, dominance des deux-roues), sans prétendre pour autant à une
+adaptation au trafic béninois lui-même (\cref{sec-discussion}).
+
+\paragraph{Contributions.}
+Nos contributions sont au nombre de trois :
+\begin{enumerate}
+  \item un protocole de comparaison équitable entre un modèle
+        pré-entraîné (80 classes COCO) et un modèle fine-tuné
+        (4 classes), fondé sur le remappage des annotations vers un
+        espace de classes aligné sur COCO et leur réindexation à la
+        volée, de sorte que les deux modèles sont évalués sur
+        exactement les mêmes images et les mêmes boîtes de référence
+        (\cref{sec-protocole}) ;
+  \item le fine-tuning reproductible d'un YOLOv8n sur un sous-ensemble
+        de 3\,000 images de BMD-45 extrait avec graines fixées, avec des
+        augmentations choisies pour la problématique des petits objets
+        (\cref{sec-entrainement}) ;
+  \item une évaluation ventilée par taille d'objet selon la convention
+        COCO, avec normalisation des aires à la résolution d'entrée du
+        réseau, qui montre que le gain de rappel est d'autant plus fort
+        que les objets sont petits : de $0{,}122$ à $0{,}694$
+        ($+469{,}4\,\%$) pour les objets de moins de $32 \times 32$
+        pixels (\cref{sec-resultats}).
+\end{enumerate}
+
+La suite de l'article est organisée ainsi : la \cref{sec-related} situe
+le travail, la \cref{sec-methode} détaille données, entraînement et
+protocole d'évaluation, la \cref{sec-resultats} rapporte les résultats,
+la \cref{sec-discussion} les interprète et en énonce les limites, et la
+\cref{sec-conclusion} conclut.

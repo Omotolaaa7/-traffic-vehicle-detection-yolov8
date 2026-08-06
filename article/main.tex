@@ -1,0 +1,55 @@
+\documentclass[a4paper,11pt]{article}
+
+% --- Encodage et langue
+\usepackage[utf8]{inputenc}     % accents directement dans le source
+\usepackage[T1]{fontenc}        % césure correcte des mots accentués
+\usepackage[french]{babel}      % typographie française
+\usepackage{lmodern}
+
+% --- Mise en page
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{microtype}
+
+% --- Sciences
+\usepackage{amsmath, amssymb}
+\usepackage{siunitx}
+\sisetup{locale = FR}           % \num{0.438} s'affiche « 0,438 »
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{subcaption}
+\usepackage{xcolor}
+
+% --- Liens et références (hyperref en dernier ou presque)
+\usepackage[hidelinks]{hyperref}
+\usepackage[french,nameinlink]{cleveref}
+
+% --- Marqueur des éléments manquants : à faire disparaître avant le rendu
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[À FAIRE : #1]}}}
+
+\title{Détection des véhicules éloignés, de petite taille et dans les
+       embouteillages en scène de trafic urbain appliquée au contexte
+       béninois : proposition d'amélioration basée sur YOLOv8}
+\author{Aïchatou Traoré \and Benoît Djossou \and Andréa Afouda\\[4pt]
+        \small Académie des Mathématiques Appliquées (Bénin)\\
+        \small Programme d'Introduction à l'IA, Cohorte 2,
+               Projet Intégrateur 1, Groupe 5}
+\date{Août 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\input{sections/resume}
+\end{abstract}
+
+\input{sections/intro}
+\input{sections/related}
+\input{sections/methode}
+\input{sections/resultats}
+\input{sections/discussion}
+\input{sections/conclusion}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

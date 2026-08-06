@@ -1,0 +1,23 @@
+La République du Bénin a engagé la mise en place d'un système national
+de vidéoprotection dont la vidéo-verbalisation par vision par ordinateur
+est une application clef. Le premier maillon du pipeline, la détection
+des véhicules, échoue le plus souvent sur les véhicules éloignés, de
+petite taille à l'image ou masqués dans les embouteillages, qui sont
+précisément les configurations dominantes du trafic urbain
+ouest-africain. Nous
+étudions si un fine-tuning de YOLOv8n sur du trafic urbain dense
+améliore cette détection. Faute de jeu de données béninois public, nous
+utilisons un sous-ensemble reproductible de 3\,000 images
+(25\,688 véhicules annotés) de BMD-45, jeu de caméras CCTV de Bengaluru
+structurellement comparable (caméras fixes, forte densité, $56\,\%$ de
+deux-roues), remappé vers quatre classes alignées sur COCO. Le protocole
+de comparaison garantit l'équité entre modèle pré-entraîné et modèle
+fine-tuné : mêmes images et boîtes de test, réindexation des classes,
+rappel ventilé par taille d'objet selon la convention COCO avec aires
+normalisées à la résolution d'entrée du réseau. Après 50 epochs, la
+mAP@0,5 passe de $0{,}438$ à $0{,}825$ ($+88{,}4\,\%$) et le rappel des
+objets de moins de $32 \times 32$ pixels de $0{,}122$ à $0{,}694$
+($+469{,}4\,\%$), le gain étant d'autant plus fort que les objets sont
+petits. L'adaptation de domaine par fine-tuning lève donc précisément le
+verrou visé et quantifie le bénéfice qu'apporterait un jeu de données
+local.

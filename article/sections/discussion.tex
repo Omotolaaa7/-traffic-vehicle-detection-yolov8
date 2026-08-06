@@ -1,0 +1,98 @@
+\section{Discussion}\label{sec-discussion}
+
+\subsection{Le verrou visé est bien celui qui est levé}
+
+La lecture centrale du \cref{tab-comparaison} est le gradient des gains
+selon la taille des objets : $+469{,}4\,\%$ de rappel pour les objets
+petits, $+135{,}6\,\%$ pour les moyens, $+20{,}2\,\%$ pour les grands.
+L'amélioration est d'autant plus forte que l'objet est petit, c'est-à-dire
+exactement là où le modèle générique échouait : le modèle pré-entraîné ne
+retrouvait qu'un objet petit sur huit ($0{,}122$), le modèle fine-tuné en
+retrouve plus des deux tiers ($0{,}694$). La réponse à la question de
+recherche est donc positive, et elle l'est de manière ciblée : le
+fine-tuning sur du trafic urbain dense n'améliore pas seulement les
+métriques globales, il lève spécifiquement le verrou des véhicules
+éloignés, de petite taille ou masqués qui motivait ce travail. Les
+augmentations orientées petits objets (\emph{mosaic}, \emph{scale},
+\cref{sec-entrainement}) et la densité du jeu d'entraînement
+($8{,}5$ véhicules par image en moyenne) sont les explications les plus
+plausibles de ce ciblage, sans que notre protocole permette d'isoler la
+contribution de chacune ; une étude d'ablation serait nécessaire.
+
+\subsection{Cohérence avec l'écart de domaine rapporté par BMD-45}
+
+Notre passage de $0{,}296$ à $0{,}644$ de mAP@0,5:0,95, soit un facteur
+$2{,}2$, est cohérent avec l'écart de domaine rapporté par les auteurs de
+BMD-45~\cite{sharma2026bmd45} : des détecteurs entraînés sur
+UA-DETRAC~\cite{wen2020uadetrac} atteignent $33{,}6\,\%$ de mAP@0,5:0,95
+sur leur jeu, contre $83{,}8\,\%$ pour des modèles entraînés en domaine,
+soit un facteur $2{,}5$. Nous retrouvons cet ordre de grandeur avec un
+modèle nano et $6{,}7\,\%$ des images du jeu complet : l'essentiel de
+l'écart entre un détecteur générique et un détecteur adapté semble donc
+se combler dès un fine-tuning modeste, ce qui est une information
+directement utile pour un déploiement à budget contraint.
+
+\subsection{Ce que le fine-tuning ne résout pas}
+
+Le rappel des objets petits plafonne à $0{,}694$ : 246 des 804 objets
+petits du jeu de test restent non détectés. Une partie de ce résidu
+relève d'une limite informationnelle et non d'un défaut de l'approche :
+sous un certain nombre de pixels, l'information nécessaire à la détection
+n'existe simplement plus dans l'image, et aucun modèle, quelle que soit
+sa taille, ne peut la reconstituer. Ce plafond suggère que les marges de
+progression restantes sont à chercher du côté de la résolution d'entrée,
+de l'inférence par tuiles ou du placement des caméras, plutôt que du seul
+entraînement.
+
+Le gain de débit ($+16{,}2\,\%$, de $37{,}2$ à $43{,}2$ FPS) doit être
+interprété avec prudence : l'architecture étant identique, il ne peut
+provenir du réseau lui-même. L'hypothèse la plus plausible est un
+post-traitement (suppression des non-maxima) allégé par la réduction de
+80 à 4 classes, à quoi s'ajoute la variabilité de mesure inhérente à un
+environnement partagé comme Google Colab. Nous n'avons pas conçu
+d'expérience pour départager ces deux effets.
+
+\subsection{Limites}
+
+\paragraph{Domaine indien, contexte béninois.}
+Il n'existe à ce jour aucun jeu de données public de vision par
+ordinateur spécifique au Bénin. Nous avons donc travaillé sur du trafic
+dense indien, structurellement comparable au trafic béninois sur trois
+points : caméras CCTV fixes, forte densité, dominance des deux-roues
+($56\,\%$ des instances, à rapprocher des zémidjans). Nos résultats
+établissent que l'adaptation à un domaine de trafic dense de ce type est
+possible et fortement bénéfique ; ils ne démontrent pas que le modèle
+obtenu est adapté au trafic béninois lui-même. La constitution d'un jeu
+de données local reste le préalable à toute conclusion de ce type.
+
+\paragraph{Échelle des expériences.}
+Le sous-ensemble utilisé représente 3\,000 images sur les 45\,000
+disponibles, le modèle est la déclinaison nano, et l'entraînement est
+limité à 50 epochs : ces choix, imposés par le temps machine disponible,
+bornent la portée des chiffres absolus rapportés, même si la comparaison
+relative entre les deux modèles reste valide puisqu'ils sont évalués dans
+des conditions identiques.
+
+\paragraph{Classes minoritaires.}
+Les bus (189 instances) et camions (240 instances) sont minoritaires
+dans le jeu de test : les métriques qui les concernent sont
+mécaniquement moins stables que celles des voitures (742) et motos
+(1\,380), et nous ne rapportons pas de métriques par classe pour cette
+raison.
+
+\paragraph{Contamination potentielle entre splits.}
+Nos splits sont dérivés de façon déterministe, mais BMD-45 étant
+constitué d'images de caméras fixes, des images quasi identiques
+(même caméra, instants proches) peuvent se retrouver de part et d'autre
+de la séparation train/test, un risque de contamination connu dans les
+jeux publics qui tendrait à flatter les métriques absolues des deux
+modèles sans invalider leur comparaison.
+
+\paragraph{Protection des données personnelles.}
+Les plaques d'immatriculation et les visages sont des données à
+caractère personnel. Tout déploiement réel d'un système de
+vidéoprotection au Bénin suppose un cadre juridique conforme au code du
+numérique~\cite{benin2017code} et le contrôle de l'Autorité de
+protection des données personnelles (APDP). Le présent travail, mené sur
+un jeu de données public diffusé sous licence CC~BY~4.0, n'implique
+aucune collecte de données.

@@ -1,0 +1,52 @@
+\section{Travaux connexes}\label{sec-related}
+
+\paragraph{Détection d'objets en une passe.}
+La famille YOLO~\cite{redmon2016yolo} a imposé le paradigme de la
+détection en une seule passe : l'image entière traverse une fois le
+réseau, qui prédit conjointement positions et classes, ce qui permet
+l'inférence temps réel indispensable à la vidéoprotection. Les versions
+successives ont notamment enrichi les augmentations de données :
+l'augmentation \emph{mosaic}, introduite avec
+YOLOv4~\cite{bochkovskiy2020yolov4}, assemble quatre images en une et
+expose le réseau à des objets réduits et à des contextes variés.
+YOLOv8~\cite{yolov8_ultralytics} en est l'implémentation de référence
+actuelle chez Ultralytics ; sa déclinaison nano, la plus légère, est
+celle utilisée ici.
+
+\paragraph{Le cas des petits objets.}
+La difficulté des détecteurs sur les petits objets est documentée depuis
+la création du benchmark COCO~\cite{lin2014coco}, au point que son
+protocole officiel ventile les métriques en trois catégories de taille
+(petit, moyen, grand), convention que nous reprenons
+(\cref{sec-protocole}). La cause est structurelle : après les
+sous-échantillonnages successifs du réseau, un véhicule de moins de
+$32 \times 32$ pixels ne pèse plus que quelques activations, souvent
+insuffisantes pour déclencher une détection. C'est précisément la
+configuration des véhicules éloignés ou masqués dans les embouteillages
+qui nous occupe.
+
+\paragraph{Jeux de données de trafic et écart de domaine.}
+Les benchmarks historiques de surveillance de trafic, comme
+UA-DETRAC~\cite{wen2020uadetrac} (100 séquences filmées en Chine),
+proviennent de contextes routiers peu représentatifs des métropoles
+denses des pays en développement. BMD-45~\cite{sharma2026bmd45} comble
+ce manque avec 45\,000 images issues de plus de 3\,600 caméras CCTV
+opérationnelles à Bengaluru, annotées en 14 catégories fines incluant
+des modes de transport régionaux. Ses auteurs quantifient l'écart de
+domaine : des détecteurs entraînés sur UA-DETRAC atteignent $33{,}6\,\%$
+de mAP@0,5:0,95 sur leur jeu, contre $83{,}8\,\%$ pour des modèles
+entraînés en domaine, un facteur $2{,}5$ qui justifie à lui seul la
+démarche d'adaptation entreprise ici.
+
+\paragraph{Vision par ordinateur pour le trafic en Afrique.}
+Les travaux africains sur le sujet restent rares.
+Mugizi \emph{et al.}~\cite{mugizi2026traffic} ont développé en Ouganda
+un système complet de surveillance du trafic (détection de véhicules,
+lecture de plaques et estimation de vitesse) atteignant $97{,}9\,\%$ de
+mAP en détection de plaques. Leur travail couvre le pipeline de bout en
+bout ; le nôtre est complémentaire : nous isolons le premier maillon, la
+détection, et son point de fragilité documenté, les petits objets. À
+notre connaissance, il n'existe aucun jeu de données public de vision
+par ordinateur consacré au trafic béninois, ce qui motive le choix d'un
+domaine structurellement comparable (\cref{sec-donnees}) et constitue la
+première limite discutée en \cref{sec-discussion}.

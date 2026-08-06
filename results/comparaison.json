@@ -1,0 +1,60 @@
+{
+  "pre_entraine": {
+    "modele": "models/yolov8n.pt",
+    "split": "test",
+    "globales": {
+      "mAP@0.5": 0.43798721417574327,
+      "mAP@0.5:0.95": 0.29589185166263376,
+      "precision": 0.49593008868548594,
+      "recall": 0.4172331837707671,
+      "f1": 0.45319056530468826
+    },
+    "fps": 37.19812220557388,
+    "rappel_par_taille": {
+      "petit": {
+        "objets": 804,
+        "detectes": 98,
+        "rappel": 0.12189054726368159
+      },
+      "moyen": {
+        "objets": 1415,
+        "detectes": 528,
+        "rappel": 0.37314487632508836
+      },
+      "grand": {
+        "objets": 332,
+        "detectes": 263,
+        "rappel": 0.7921686746987951
+      }
+    }
+  },
+  "fine_tune": {
+    "modele": "models/finetuned/yolov8n_benin.pt",
+    "split": "test",
+    "globales": {
+      "mAP@0.5": 0.8251917674219386,
+      "mAP@0.5:0.95": 0.6443107924629095,
+      "precision": 0.8327410020176857,
+      "recall": 0.7137768129878977,
+      "f1": 0.7686833125325313
+    },
+    "fps": 43.22111859098405,
+    "rappel_par_taille": {
+      "petit": {
+        "objets": 804,
+        "detectes": 558,
+        "rappel": 0.6940298507462687
+      },
+      "moyen": {
+        "objets": 1415,
+        "detectes": 1244,
+        "rappel": 0.8791519434628975
+      },
+      "grand": {
+        "objets": 332,
+        "detectes": 316,
+        "rappel": 0.9518072289156626
+      }
+    }
+  }
+}

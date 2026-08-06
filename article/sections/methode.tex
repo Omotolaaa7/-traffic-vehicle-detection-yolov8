@@ -1,0 +1,208 @@
+\section{Méthodologie}\label{sec-methode}
+
+\subsection{Jeu de données}\label{sec-donnees}
+
+\paragraph{Source.}
+Nous utilisons BMD-45~\cite{sharma2026bmd45}, un jeu de données publié à
+CVPR 2026 (Findings) et diffusé sous licence CC~BY~4.0. Il comprend
+45\,000 images et 480\,000 boîtes englobantes annotées, issues de plus de
+3\,600 caméras CCTV opérationnelles du réseau de vidéosurveillance de
+Bengaluru (Inde), avec 14 catégories fines de véhicules. Ce jeu présente
+trois caractéristiques qui motivent son choix : des caméras fixes de
+vidéoprotection (et non des caméras embarquées), un trafic urbain dense,
+et une forte proportion de deux-roues, trois traits structurels partagés
+avec le trafic urbain béninois (cf.~\cref{sec-discussion} pour les limites
+de ce rapprochement).
+
+\paragraph{Extraction du sous-ensemble.}
+Pour tenir dans le budget de calcul disponible, un sous-ensemble est
+extrait en streaming depuis Hugging Face avec des graines fixées :
+2\,400 images d'entraînement (graine 42) et 600 images de validation
+(graine 43). BMD-45 ne fournissant pas de jeu de test, celui-ci est dérivé
+de la validation par une partition déterministe moitié-moitié (graine 42),
+soit au final 2\,400 images d'entraînement, 300 de validation et 300 de
+test. Le jeu de test n'intervient à aucun moment dans l'entraînement ni
+dans la sélection du modèle.
+
+\paragraph{Remappage des classes.}
+Le modèle de référence étant pré-entraîné sur COCO~\cite{lin2014coco},
+la comparaison n'est équitable que si les deux modèles partagent le même
+espace sémantique. Les 14 classes de BMD-45 sont donc ramenées aux
+4 classes de véhicules communes avec COCO selon le
+\cref{tab-remappage}. Les trois catégories sans équivalent COCO
+(\emph{Three-wheeler}, \emph{Bicycle}, \emph{Other}) sont ignorées :
+les conserver reviendrait à demander au modèle pré-entraîné de détecter
+des classes qu'il ne connaît pas, ce qui fausserait la comparaison en sa
+défaveur.
+
+\begin{table}[tb]
+  \centering
+  \caption{Remappage des 14 classes BMD-45 vers les 4 classes alignées
+  sur COCO. L'identifiant COCO est celui utilisé lors de la réindexation
+  du protocole d'évaluation (\cref{sec-protocole}).}
+  \label{tab-remappage}
+  \begin{tabular}{lll}
+    \toprule
+    Classes BMD-45 & Classe retenue & Identifiant COCO \\
+    \midrule
+    Hatchback, Sedan, SUV, MUV, Van & voiture & 2 (\emph{car}) \\
+    Two-wheeler                     & moto    & 3 (\emph{motorcycle}) \\
+    Bus, Mini-bus, Tempo-traveller  & bus     & 5 (\emph{bus}) \\
+    Truck, LCV                      & camion  & 7 (\emph{truck}) \\
+    \midrule
+    Three-wheeler, Bicycle, Other   & \multicolumn{2}{l}{ignorées (aucun équivalent COCO)} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Volumétrie.}
+Le \cref{tab-volumetrie} donne les effectifs par split et par classe
+après remappage. Deux faits saillants : le sous-ensemble compte en
+moyenne $8{,}5$ véhicules annotés par image, signature d'un trafic dense
+propice aux occlusions ; et les motos représentent $56\,\%$ des
+25\,688 instances, une distribution qui rapproche structurellement ce jeu
+du trafic béninois, dominé par les taxis-motos (zémidjans).
+
+\begin{table}[tb]
+  \centering
+  \caption{Effectifs du sous-ensemble par split et par classe après
+  remappage vers les 4 classes alignées sur COCO.}
+  \label{tab-volumetrie}
+  \begin{tabular}{lrrrrrr}
+    \toprule
+    Split & Images & voiture & moto & bus & camion & Total instances \\
+    \midrule
+    train & 2\,400 & 5\,744 & 11\,641 & 1\,298 & 1\,873 & 20\,556 \\
+    val   & 300    & 752    & 1\,476  & 138    & 215    & 2\,581  \\
+    test  & 300    & 742    & 1\,380  & 189    & 240    & 2\,551  \\
+    \midrule
+    Total & 3\,000 & 7\,238 & 14\,497 & 1\,625 & 2\,328 & 25\,688 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Modèle et entraînement}\label{sec-entrainement}
+
+\paragraph{Modèle.}
+Nous partons de YOLOv8n~\cite{yolov8_ultralytics}, la déclinaison la plus
+compacte ($3{,}2$ millions de paramètres) de la famille
+YOLOv8, héritière de l'architecture à une passe introduite par
+YOLO~\cite{redmon2016yolo}. Le choix du modèle \emph{nano} est un
+compromis assumé entre coût d'entraînement et représentativité : c'est
+aussi la taille la plus plausible pour une inférence temps réel sur du
+matériel modeste. Le fine-tuning démarre des poids pré-entraînés sur
+COCO~\cite{lin2014coco}, qui servent également de modèle de référence
+dans la comparaison.
+
+\paragraph{Hyperparamètres.}
+L'entraînement utilise Ultralytics 8.4.114 et PyTorch 2.13, sur un GPU
+NVIDIA T4 (Google Colab) : 50 epochs, images redimensionnées à 640 pixels,
+batch de 16, arrêt anticipé avec patience de 15 epochs, graine aléatoire 42.
+Le \cref{tab-hyperparams} récapitule les augmentations de données.
+Deux d'entre elles sont directement rattachées à la problématique :
+\emph{mosaic} (assemblage de quatre images en une) et \emph{scale}
+(zoom aléatoire $\pm 70\,\%$) produisent mécaniquement des objets plus
+petits que ceux du jeu d'origine, ce qui expose le modèle à la
+configuration visée, celle des véhicules éloignés et de petite taille. À
+l'inverse, le retournement vertical et la rotation sont désactivés
+(\texttt{flipud}${}=0$, \texttt{degrees}${}=0$) : les caméras de
+vidéoprotection sont fixes et une scène routière possède un haut et un
+bas ; ces transformations créeraient des configurations jamais
+rencontrées en exploitation.
+
+\begin{table}[tb]
+  \centering
+  \caption{Hyperparamètres d'augmentation de données. Les valeurs non
+  listées sont celles par défaut d'Ultralytics 8.4.114.}
+  \label{tab-hyperparams}
+  \begin{tabular}{lll}
+    \toprule
+    Paramètre & Valeur & Justification \\
+    \midrule
+    \texttt{mosaic}    & $1{,}0$   & produit des objets plus petits (problématique) \\
+    \texttt{scale}     & $0{,}7$   & zoom aléatoire, mêmes effets \\
+    \texttt{fliplr}    & $0{,}5$   & symétrie gauche-droite plausible \\
+    \texttt{translate} & $0{,}1$   & translations légères \\
+    \texttt{hsv\_h}    & $0{,}015$ & variations de teinte \\
+    \texttt{hsv\_s}    & $0{,}7$   & variations de saturation \\
+    \texttt{hsv\_v}    & $0{,}4$   & variations de luminosité (heures, météo) \\
+    \texttt{flipud}    & $0{,}0$   & désactivé : une scène routière a un haut et un bas \\
+    \texttt{degrees}   & $0{,}0$   & désactivé : caméras fixes \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Protocole d'évaluation}\label{sec-protocole}
+
+Les deux modèles (YOLOv8n pré-entraîné sur COCO et YOLOv8n fine-tuné)
+sont évalués sur exactement les mêmes 300 images de test et les mêmes
+2\,551 boîtes de référence. Trois précautions garantissent l'équité et la
+pertinence de la comparaison.
+
+\paragraph{1. Alignement et réindexation des classes.}
+Le modèle pré-entraîné expose les 80 classes COCO, le modèle fine-tuné
+en expose 4. Les labels du jeu de test sont donc réindexés à la volée
+vers l'espace de classes du modèle évalué : pour le modèle COCO,
+$0 \rightarrow 2$, $1 \rightarrow 3$, $2 \rightarrow 5$,
+$3 \rightarrow 7$ ; pour le modèle fine-tuné, les indices $0$ à $3$ sont
+conservés. Le modèle COCO est de plus restreint aux classes
+$\{2, 3, 5, 7\}$ lors de l'inférence, afin qu'il ne soit pas pénalisé
+par des détections hors périmètre (piétons, feux de signalisation, etc.)
+qui seraient comptées comme faux positifs.
+
+\paragraph{2. Rappel ventilé par taille d'objet.}
+La problématique portant sur les véhicules petits et éloignés, le rappel
+est ventilé selon la convention COCO : \emph{petit} si l'aire de la boîte
+est inférieure à $32 \times 32$ pixels, \emph{moyen} si elle est
+inférieure à $96 \times 96$ pixels, \emph{grand} au-delà. Point crucial :
+les aires sont ramenées à la résolution d'entrée du réseau (640 pixels)
+avant classement. Sans cette normalisation, sur des images de plusieurs
+milliers de pixels de large, la quasi-totalité des véhicules tombe dans
+la catégorie \og grand \fg{} et la ventilation ne mesure plus rien.
+C'est précisément ce qui s'est produit lors de notre premier essai, et ce
+qui a conduit à cette correction du protocole. Le calcul procède par
+appariement glouton : les prédictions (seuil de confiance $0{,}25$) sont
+appariées aux boîtes de référence par IoU décroissant
+(\cref{eq-iou}), avec un seuil $\mathrm{IoU} \geq 0{,}5$ ; une
+prédiction ne peut valider qu'une seule boîte de référence ; la mesure
+est agnostique à la classe.
+
+\paragraph{3. Jeu de test isolé.}
+Le jeu de test, dérivé de façon déterministe
+(\cref{sec-donnees}), n'a jamais été vu à l'entraînement ni utilisé pour
+la sélection du modèle ou des hyperparamètres.
+
+\paragraph{Métriques.}
+Nous rapportons la précision, le rappel et le F1-score
+(\cref{eq-precision-rappel,eq-f1}), la mAP à IoU fixé à $0{,}5$ et
+moyennée de $0{,}5$ à $0{,}95$ (\cref{eq-map}), le débit d'inférence en
+images par seconde (FPS, mesuré sur GPU T4, une inférence d'échauffement
+exclue de la mesure), et le rappel ventilé petit / moyen / grand décrit
+ci-dessus. Les métriques globales sont calculées par le validateur
+d'Ultralytics avec un seuil de confiance de $0{,}001$ et un seuil IoU de
+$0{,}6$ : le seuil de confiance très bas est nécessaire pour tracer la
+courbe précision-rappel complète dont la mAP est l'aire sous la courbe.
+
+\begin{equation}
+  \text{Précision} = \frac{VP}{VP + FP}, \qquad
+  \text{Rappel} = \frac{VP}{VP + FN},
+  \label{eq-precision-rappel}
+\end{equation}
+où $VP$, $FP$ et $FN$ désignent respectivement les vrais positifs, faux
+positifs et faux négatifs ;
+\begin{equation}
+  F_1 = 2 \cdot \frac{\text{Précision} \times \text{Rappel}}
+                     {\text{Précision} + \text{Rappel}} ;
+  \label{eq-f1}
+\end{equation}
+\begin{equation}
+  \mathrm{IoU}(A, B) = \frac{|A \cap B|}{|A \cup B|}
+  \label{eq-iou}
+\end{equation}
+pour deux boîtes $A$ et $B$ ; et
+\begin{equation}
+  \mathrm{mAP} = \frac{1}{N} \sum_{i=1}^{N} \mathrm{AP}_i,
+  \label{eq-map}
+\end{equation}
+où $\mathrm{AP}_i$ est l'aire sous la courbe précision-rappel de la
+classe $i$ et $N$ le nombre de classes.

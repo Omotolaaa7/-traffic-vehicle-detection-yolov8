@@ -1,0 +1,10 @@
+metrique,pre_entraine,fine_tune,ecart
+mAP@0.5,0.4380,0.8252,+88.4 %
+mAP@0.5:0.95,0.2959,0.6443,+117.8 %
+Precision,0.4959,0.8327,+67.9 %
+Recall,0.4172,0.7138,+71.1 %
+F1-score,0.4532,0.7687,+69.6 %
+Debit (FPS),37.2,43.2,+16.2 %
+Rappel objets petits (804 objets),0.1219,0.6940,+469.4 %
+Rappel objets moyens (1415 objets),0.3731,0.8792,+135.6 %
+Rappel objets grands (332 objets),0.7922,0.9518,+20.2 %

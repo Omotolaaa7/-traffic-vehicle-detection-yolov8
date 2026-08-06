@@ -41,3 +41,6 @@ desktop.ini
 
 # Claude
 .claude/
+# Documents de travail non versionnés
+docs/PROMPTS_CLAUDE.md
+docs/PLAN_SOUTENANCE.md

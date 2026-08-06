@@ -1,0 +1,25 @@
+\section{Conclusion}\label{sec-conclusion}
+
+Nous avons montré qu'un fine-tuning modeste (3\,000 images, modèle
+nano, 50 epochs sur un GPU T4) suffit à transformer un détecteur
+générique en un détecteur adapté au trafic urbain dense, et que le gain
+se concentre là où il était attendu : le rappel des véhicules de moins
+de $32 \times 32$ pixels passe de $0{,}122$ à $0{,}694$
+($+469{,}4\,\%$), tandis que la mAP@0,5 progresse de $0{,}438$ à
+$0{,}825$ ($+88{,}4\,\%$), à débit d'inférence au moins égal. La valeur
+du travail tient autant au protocole qu'aux chiffres : classes alignées
+sur COCO et réindexées pour une comparaison équitable, rappel ventilé
+par taille avec aires normalisées à la résolution d'entrée, jeu de test
+isolé et dérivé de façon déterministe.
+
+Trois prolongements se dégagent, par ordre de priorité. D'abord, la
+constitution d'un jeu de données annoté de trafic béninois, préalable
+indispensable pour transformer un résultat obtenu sur un domaine
+comparable en un résultat établi sur le domaine cible, et dont ce
+travail fournit le protocole d'évaluation clef en main. Ensuite, le
+passage à l'échelle : entraîner sur les 45\,000 images de BMD-45 et sur
+des déclinaisons plus grandes de YOLOv8 (s, m), pour mesurer ce que le
+plafond observé sur les petits objets doit au modèle et ce qu'il doit à
+la limite informationnelle. Enfin, la poursuite du pipeline de
+vidéo-verbalisation (suivi multi-objets puis lecture de plaques), dont
+la détection fiabilisée par ce travail constitue le socle.

@@ -1,0 +1,61 @@
+\begin{thebibliography}{1}
+
+\bibitem{bochkovskiy2020yolov4}
+Alexey Bochkovskiy, Chien-Yao Wang, and Hong-Yuan~Mark Liao.
+\newblock {YOLOv4}: Optimal speed and accuracy of object detection, 2020.
+\newblock arXiv:2004.10934.
+
+\bibitem{yolov8_ultralytics}
+Glenn Jocher, Ayush Chaurasia, and Jing Qiu.
+\newblock Ultralytics {YOLOv8}, 2023.
+\newblock Version 8.4.114.
+
+\bibitem{lin2014coco}
+Tsung-Yi Lin, Michael Maire, Serge Belongie, James Hays, Pietro Perona, Deva
+  Ramanan, Piotr Doll{\'a}r, and C.~Lawrence Zitnick.
+\newblock Microsoft {COCO}: Common objects in context.
+\newblock In {\em European Conference on Computer Vision (ECCV)}, pages
+  740--755, 2014.
+
+\bibitem{mugizi2026traffic}
+Bruce Mugizi, Sudi Murindanyi, Olivia Nakacwa, and Andrew Katumba.
+\newblock Intelligent traffic surveillance for real-time vehicle detection,
+  license plate recognition, and speed estimation, 2026.
+\newblock arXiv:2601.00344.
+
+\bibitem{redmon2016yolo}
+Joseph Redmon, Santosh Divvala, Ross Girshick, and Ali Farhadi.
+\newblock You only look once: Unified, real-time object detection.
+\newblock In {\em IEEE Conference on Computer Vision and Pattern Recognition
+  (CVPR)}, pages 779--788, 2016.
+
+\bibitem{benin2017code}
+{R{\'e}publique du B{\'e}nin}.
+\newblock Loi n{\textdegree}~2017-20 du 20 avril 2018 portant code du
+  num{\'e}rique en r{\'e}publique du b{\'e}nin, 2018.
+
+\bibitem{sgg2026conseil}
+{Secr{\'e}tariat G{\'e}n{\'e}ral du Gouvernement du B{\'e}nin}.
+\newblock Comptes rendus des conseils des ministres du 11 mars 2026 et du 3
+  juin 2026.
+\newblock \url{https://sgg.gouv.bj}, 2026.
+
+\bibitem{sharma2026bmd45}
+Akash Sharma, Chinmay Mhatre, Sankalp Gawali, Ruthvik Bokkasam, Brij Kishore,
+  Vishwajeet Pattanaik, Tarun Rambha, Abdul~R. Pinjari, Vijay Kovvali, Anirban
+  Chakraborty, Punit Rathore, Raghu Krishnapuram, and Yogesh Simmhan.
+\newblock {BMD}-45: A large-scale {CCTV} vehicle detection dataset for urban
+  traffic in developing cities.
+\newblock In {\em IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition (CVPR), Findings Track}, 2026.
+\newblock arXiv:2604.24419. Jeu de donn{\'e}es :
+  \url{https://huggingface.co/datasets/iisc-aim/BMD-45}, licence CC BY 4.0.
+
+\bibitem{wen2020uadetrac}
+Longyin Wen, Dawei Du, Zhaowei Cai, Zhen Lei, Ming-Ching Chang, Honggang Qi,
+  Jongwoo Lim, Ming-Hsuan Yang, and Siwei Lyu.
+\newblock {UA-DETRAC}: A new benchmark and protocol for multi-object detection
+  and tracking.
+\newblock {\em Computer Vision and Image Understanding}, 193:102907, 2020.
+
+\end{thebibliography}
