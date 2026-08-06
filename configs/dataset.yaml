@@ -10,8 +10,13 @@
 #   moto    -> COCO 3  (motorcycle)
 #   bus     -> COCO 5  (bus)
 #   camion  -> COCO 7  (truck)
+#
+# Le chemin est absolu car Ultralytics resout un `path` relatif par
+# rapport a son reglage global datasets_dir, pas par rapport a ce
+# fichier. Le fichier etant regenere sur chaque machine par
+# import_dataset.py, un chemin absolu est sans risque.
 
-path: ../data/dataset
+path: C:/Users/Andréa Afouda/Documents/Projets python et autres/Mon Projet ML/AMA/Projets_AMA/Projet1/data/dataset
 train: train/images
 val: val/images
 test: test/images
