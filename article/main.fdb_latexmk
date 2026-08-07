@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1786031850.76378 "main.aux" "main.bbl" "main" 1786031857.33275 0
+["bibtex main"] 1786096970.78459 "main.aux" "main.bbl" "main" 1786096990.59009 0
   "./references.bib" 1786027776.41153 3355 3c4f892db3eae20aba3521997fbc7fc3 ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/plain.bst" 1291864736 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "main.aux" 1786031855.56507 12143 8712201560e3f7d7aa25a133ad484b62 "pdflatex"
+  "main.aux" 1786096985.78294 13178 da17a352eb6ea2546bf9975d6f4c8d8c "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1786031851.37403 "main.tex" "main.pdf" "main" 1786031857.33434 0
+["pdflatex"] 1786096972.69491 "main.tex" "main.pdf" "main" 1786096990.59514 0
   "C:/Users/Andréa" 1764336295.12009 12654 8a131c69d259717ad2ab0c5ab2fe2048 ""
   "C:/Users/Andréa Afouda/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1786027968.26141 82718 e13e7a60a06dc40cc7e9e94052780490 ""
   "C:/Users/Andréa Afouda/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1767635653.23851 13337878 5e226bc9cac46b421153ca4ce2af2e18 ""
@@ -34,7 +34,6 @@
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmr6.tfm" 1256929440 12048 c1068d0f4772be9b0ec447692e1d6d82 ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmr8.tfm" 1256929440 12064 a35db870f0b76c338d749c56dc030ef5 ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmri10.tfm" 1256929440 17148 9556e1b5f936b77a796f68d2d559ba99 ""
-  "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmtk10.tfm" 1256929440 1368 5bfeb1cf8f9f0acdb7436bfaa8e0da4e ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmtt10.tfm" 1256929440 1372 2ef2c2b492b3c4cd7879fe083abbb061 ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmex10.tfm" 1256929440 992 ce925c9346c7613270a79afbee98c070 ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmmi10.tfm" 1256929440 1528 6d36b2385e0ca062a654de6ac59cb34f ""
@@ -70,7 +69,6 @@
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb" 1256929440 122174 a7a08406857c9530a0320a2517f60370 ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb" 1256929440 112593 fda2373ba4420af33949610de4c28fe8 ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb" 1256929440 27863 09ce3735688ffde955e72da27c95b61a ""
-  "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtk10.pfb" 1256929440 117319 7f8361f845845ce6d5b36cbd9f9cf377 ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb" 1256929440 113227 1010e11451afc2822c95dae77c390042 ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/tex/context/base/mkii/supp-pdf.mkii" 1580390158 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/tex/generic/babel-french/french.ldf" 1756554183 47319 b47cc42e0d211cf69f68d58f695ca90c ""
@@ -158,18 +156,19 @@
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/tex/latex/translations/translations.sty" 1644048522 44247 2188b95d0ee74e31eca4d316263c58a7 ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/Andréa Afouda/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
+  "figures/courbes_entrainement.pdf" 1786096738.97845 22542 c0c97298fe6558b573badf9f8b8a055c ""
   "figures/scene1_base.jpg" 1786031656.42961 686424 871600b09103c051f022cf1f862435c7 ""
   "figures/scene1_finetune.jpg" 1786031656.45742 722888 36a005e7524571435afefb1021daf376 ""
-  "main.aux" 1786031855.56507 12143 8712201560e3f7d7aa25a133ad484b62 "pdflatex"
-  "main.bbl" 1786031851.21861 2595 7ea7c2421ab9a05ff3c5b9b7617ad63f "bibtex main"
-  "main.out" 1786031855.58046 2702 9782cbee31d779461d805680bd642a62 "pdflatex"
+  "main.aux" 1786096985.78294 13178 da17a352eb6ea2546bf9975d6f4c8d8c "pdflatex"
+  "main.bbl" 1786096972.1381 2595 7ea7c2421ab9a05ff3c5b9b7617ad63f "bibtex main"
+  "main.out" 1786096985.82204 2886 71192d58ef1ee5e2d7d5abe841adbb4e "pdflatex"
   "main.tex" 1786027538.46287 1657 2e9b6ac097d291c42f3caee8a327c0b9 ""
   "sections/conclusion.tex" 1786030191.15883 1563 5a3860ad203eefdd5ff22dd7a454ea3e ""
-  "sections/discussion.tex" 1786030201.83048 5589 50dc7a5ea5dc1b240c2661bf1ab10d99 ""
+  "sections/discussion.tex" 1786096802.74376 6051 718c446c6982f5a4db47041e3ff64a3f ""
   "sections/intro.tex" 1786030206.19863 3897 9e67d34270fe65bf949afb06ca7e5d34 ""
   "sections/methode.tex" 1786030223.81171 10239 4c11ddb87ff64913297cdff46db0243f ""
   "sections/related.tex" 1786030239.54815 3094 9a96b89f90b20c45ccf45591069fb417 ""
-  "sections/resultats.tex" 1786031671.35626 4546 bbb91716d461b27b9d6560719346e2c1 ""
+  "sections/resultats.tex" 1786096786.4005 6765 7b4c0b47847bfddc8dab217efe05e3f2 ""
   "sections/resume.tex" 1786030241.98354 1536 8abc7da28fe36c5a5efe01302deefae8 ""
   (generated)
   "main.aux"

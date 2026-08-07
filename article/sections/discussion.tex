@@ -71,7 +71,13 @@ disponibles, le modèle est la déclinaison nano, et l'entraînement est
 limité à 50 epochs : ces choix, imposés par le temps machine disponible,
 bornent la portée des chiffres absolus rapportés, même si la comparaison
 relative entre les deux modèles reste valide puisqu'ils sont évalués dans
-des conditions identiques.
+des conditions identiques. La \cref{sec-dynamique} permet de préciser
+cette limite plutôt que de seulement la constater : les pertes de
+validation étant encore à leur minimum à la dernière epoch, la borne des
+50 epochs a effectivement été atteinte avant la convergence. Nos chiffres
+absolus sont donc un plancher, et prolonger l'entraînement est la
+première expérience à mener — avant même de passer à une déclinaison de
+modèle plus grande ou au jeu de données complet.
 
 \paragraph{Classes minoritaires.}
 Les bus (189 instances) et camions (240 instances) sont minoritaires
