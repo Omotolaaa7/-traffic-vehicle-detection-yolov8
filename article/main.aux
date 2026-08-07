@@ -87,12 +87,10 @@
 \newlabel{sec-resultats@cref}{{[section][4][]4}{[1][5][]6}{}{}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Métriques globales et rappel par taille}{6}{subsection.4.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Illustrations qualitatives et courbes d'entraînement}{6}{subsection.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{6}{section.5}\protected@file@percent }
-\newlabel{sec-discussion}{{5}{6}{Discussion}{section.5}{}}
-\newlabel{sec-discussion@cref}{{[section][5][]5}{[1][6][]6}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Le verrou visé est bien celui qui est levé}{6}{subsection.5.1}\protected@file@percent }
-\citation{sharma2026bmd45}
-\citation{wen2020uadetrac}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Dynamique d'entraînement}{6}{subsection.4.3}\protected@file@percent }
+\newlabel{sec-dynamique}{{4.3}{6}{Dynamique d'entraînement}{subsection.4.3}{}}
+\newlabel{sec-dynamique@cref}{{[subsection][3][4]4.3}{[1][6][]6}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Une convergence rapide puis un plateau.}{6}{section*.25}\protected@file@percent }
 \newlabel{fig-demo-base}{{1a}{7}{YOLOv8n pré-entraîné (COCO) : 4 véhicules détectés}{figure.caption.23}{}}
 \newlabel{fig-demo-base@cref}{{[subfigure][1][1]1a}{[1][6][]7}{}{}{}}
 \newlabel{sub@fig-demo-base}{{a}{7}{YOLOv8n pré-entraîné (COCO) : 4 véhicules détectés}{figure.caption.23}{}}
@@ -104,30 +102,38 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Détections des deux modèles sur une même scène d'embouteillage du jeu de test (image \texttt  {val\_000556}, seuil de confiance $0{,}25$). Les visages sont floutés à la source dans BMD-45 ; la seule plaque d'immatriculation partiellement lisible a été floutée par nos soins.}}{7}{figure.caption.23}\protected@file@percent }
 \newlabel{fig-demo}{{1}{7}{Détections des deux modèles sur une même scène d'embouteillage du jeu de test (image \texttt {val\_000556}, seuil de confiance $0{,}25$). Les visages sont floutés à la source dans BMD-45 ; la seule plaque d'immatriculation partiellement lisible a été floutée par nos soins}{figure.caption.23}{}}
 \newlabel{fig-demo@cref}{{[figure][1][]1}{[1][6][]7}{}{}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Courbes d'entraînement du fine-tuning : fonctions de perte (boîte, classification, DFL) et mAP@0,5 et mAP@0,5:0,95 sur le jeu de validation, au fil des 50 epochs.}}{7}{figure.caption.24}\protected@file@percent }
-\newlabel{fig-courbes}{{2}{7}{Courbes d'entraînement du fine-tuning : fonctions de perte (boîte, classification, DFL) et mAP@0,5 et mAP@0,5:0,95 sur le jeu de validation, au fil des 50 epochs}{figure.caption.24}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Courbes d'entraînement du fine-tuning : fonctions de perte (boîte, classification, DFL) et mAP@0,5 et mAP@0,5:0,95 sur le jeu de validation, au fil des 50 epochs. Les pertes d'entraînement sont en trait plein, celles de validation en pointillés. La ligne verticale marque l'epoch 47, où la mAP@0,5:0,95 de validation atteint son maximum.}}{7}{figure.caption.24}\protected@file@percent }
+\newlabel{fig-courbes}{{2}{7}{Courbes d'entraînement du fine-tuning : fonctions de perte (boîte, classification, DFL) et mAP@0,5 et mAP@0,5:0,95 sur le jeu de validation, au fil des 50 epochs. Les pertes d'entraînement sont en trait plein, celles de validation en pointillés. La ligne verticale marque l'epoch 47, où la mAP@0,5:0,95 de validation atteint son maximum}{figure.caption.24}{}}
 \newlabel{fig-courbes@cref}{{[figure][2][]2}{[1][6][]7}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Cohérence avec l'écart de domaine rapporté par BMD-45}{7}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Ce que le fine-tuning ne résout pas}{7}{subsection.5.3}\protected@file@percent }
-\citation{benin2017code}
+\@writefile{toc}{\contentsline {paragraph}{Aucun surapprentissage à 50 epochs.}{7}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Le budget de calcul, et non la convergence, a fixé l'arrêt.}{7}{section*.27}\protected@file@percent }
+\citation{sharma2026bmd45}
+\citation{wen2020uadetrac}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{8}{section.5}\protected@file@percent }
+\newlabel{sec-discussion}{{5}{8}{Discussion}{section.5}{}}
+\newlabel{sec-discussion@cref}{{[section][5][]5}{[1][8][]8}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Le verrou visé est bien celui qui est levé}{8}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Cohérence avec l'écart de domaine rapporté par BMD-45}{8}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Ce que le fine-tuning ne résout pas}{8}{subsection.5.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Limites}{8}{subsection.5.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Domaine indien, contexte béninois.}{8}{section*.25}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Échelle des expériences.}{8}{section*.26}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Classes minoritaires.}{8}{section*.27}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Contamination potentielle entre splits.}{8}{section*.28}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Protection des données personnelles.}{8}{section*.29}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{8}{section.6}\protected@file@percent }
-\newlabel{sec-conclusion}{{6}{8}{Conclusion}{section.6}{}}
-\newlabel{sec-conclusion@cref}{{[section][6][]6}{[1][8][]8}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Domaine indien, contexte béninois.}{8}{section*.28}\protected@file@percent }
+\citation{benin2017code}
 \bibstyle{plain}
 \bibdata{references}
 \bibcite{bochkovskiy2020yolov4}{1}
 \bibcite{yolov8_ultralytics}{2}
 \bibcite{lin2014coco}{3}
+\@writefile{toc}{\contentsline {paragraph}{Échelle des expériences.}{9}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Classes minoritaires.}{9}{section*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Contamination potentielle entre splits.}{9}{section*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Protection des données personnelles.}{9}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{9}{section.6}\protected@file@percent }
+\newlabel{sec-conclusion}{{6}{9}{Conclusion}{section.6}{}}
+\newlabel{sec-conclusion@cref}{{[section][6][]6}{[1][9][]9}{}{}{}}
 \bibcite{mugizi2026traffic}{4}
 \bibcite{redmon2016yolo}{5}
 \bibcite{benin2017code}{6}
 \bibcite{sgg2026conseil}{7}
 \bibcite{sharma2026bmd45}{8}
 \bibcite{wen2020uadetrac}{9}
-\gdef \@abspage@last{9}
+\gdef \@abspage@last{10}
