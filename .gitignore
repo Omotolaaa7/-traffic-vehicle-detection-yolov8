@@ -30,9 +30,18 @@ data/outputs/
 
 # Sorties d'entraînement et d'évaluation.
 # results/comparaison.* est le livrable du rapport : on le garde.
-results/entrainements/
+results/entrainements/*
 runs/
 *.cache
+
+# Exception : le run du fine-tuning documenté dans l'article. results.csv
+# est la source de figures/courbes_entrainement.pdf (scripts/tracer_courbes.py)
+# et args.yaml atteste des hyperparamètres réellement utilisés ; sans eux la
+# figure n'est plus régénérable après la fermeture de la session Colab.
+# Les poids restent exclus : best.pt est déjà versionné sous
+# models/finetuned/yolov8n_benin.pt, last.pt n'a pas d'intérêt.
+!results/entrainements/yolov8n_benin/
+results/entrainements/yolov8n_benin/weights/
 
 # Vues temporaires créées par scripts/evaluate.py
 _vue_coco_*
