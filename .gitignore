@@ -10,10 +10,16 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 
-# Poids de modèles (téléchargés ou entraînés, jamais versionnés)
+# Poids de modèles. yolov8n.pt se retélécharge tout seul chez Ultralytics ;
+# les poids d'entraînement intermédiaires restent locaux.
 models/*.pt
 models/*.onnx
-models/finetuned/
+models/finetuned/*
+
+# Exception : les poids fine-tunés sont le livrable du projet et la seule
+# chose non régénérable sans relancer un entraînement complet. 6 Mo, requis
+# par l'application Streamlit une fois déployée.
+!models/finetuned/yolov8n_benin.pt
 
 # Jeu de données téléchargé et sa conversion.
 # Plusieurs giga-octets, entièrement régénérables : le jeu se retélécharge et
