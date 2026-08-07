@@ -308,7 +308,12 @@ INPUT .\figures\scene1_finetune.jpg
 INPUT .\figures\scene1_finetune.jpg
 INPUT .\figures\scene1_finetune.jpg
 INPUT .\figures\scene1_finetune.jpg
-INPUT C:\Users\Andréa Afouda\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmtk10.tfm
+INPUT .\figures\courbes_entrainement.pdf
+INPUT .\figures\courbes_entrainement.pdf
+INPUT .\figures\courbes_entrainement.pdf
+INPUT .\figures\courbes_entrainement.pdf
+INPUT .\figures\courbes_entrainement.pdf
+INPUT .\figures\courbes_entrainement.pdf
 INPUT .\sections\discussion.tex
 INPUT .\sections\discussion.tex
 INPUT .\sections\discussion.tex
@@ -354,7 +359,5 @@ INPUT C:\Users\Andréa Afouda\AppData\Local\Programs\MiKTeX\fonts\type1\public\l
 INPUT C:\Users\Andréa Afouda\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmri10.pfb
 INPUT C:\Users\Andréa Afouda\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsy10.pfb
 INPUT C:\Users\Andréa Afouda\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmsy10.pfb
-INPUT C:\Users\Andréa Afouda\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtk10.pfb
-INPUT C:\Users\Andréa Afouda\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtk10.pfb
 INPUT C:\Users\Andréa Afouda\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtt10.pfb
 INPUT C:\Users\Andréa Afouda\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmtt10.pfb

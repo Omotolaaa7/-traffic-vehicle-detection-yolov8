@@ -86,14 +86,52 @@ au fil des 50 epochs d'entraînement.
 
 \begin{figure}[tb]
   \centering
-  % \includegraphics[width=0.9\linewidth]{figures/courbes_entrainement.pdf}
-  \fbox{\parbox[c][5cm][c]{0.85\linewidth}{\centering
-    \todo{exporter depuis le dossier \texttt{runs/} de Colab le
-    \texttt{results.png} de l'entraînement (ou le retracer en PDF
-    vectoriel avec matplotlib) et le déposer sous
-    \texttt{figures/courbes\_entrainement.pdf}}}}
+  \includegraphics[width=\linewidth]{figures/courbes_entrainement.pdf}
   \caption{Courbes d'entraînement du fine-tuning : fonctions de perte
   (boîte, classification, DFL) et mAP@0,5 et mAP@0,5:0,95 sur le jeu de
-  validation, au fil des 50 epochs.}
+  validation, au fil des 50 epochs. Les pertes d'entraînement sont en
+  trait plein, celles de validation en pointillés. La ligne verticale
+  marque l'epoch 47, où la mAP@0,5:0,95 de validation atteint son
+  maximum.}
   \label{fig-courbes}
 \end{figure}
+
+\subsection{Dynamique d'entraînement}\label{sec-dynamique}
+
+Les courbes de la \cref{fig-courbes} apportent trois informations que les
+métriques finales seules ne donnent pas.
+
+\paragraph{Une convergence rapide puis un plateau.}
+La mAP@0,5:0,95 sur le jeu de validation passe de $0{,}406$ après la
+première epoch à $0{,}669$ à la cinquantième, avec un maximum de
+$0{,}670$ atteint à l'epoch 47. Elle franchit dès l'epoch 29 le seuil de
+$95\,\%$ de sa valeur finale : les vingt et une dernières epochs
+n'apportent que les $5\,\%$ restants. Le décrochage visible à l'epoch 2,
+où la mAP@0,5 recule de $0{,}591$ à $0{,}534$, correspond à la montée en
+puissance du taux d'apprentissage pendant la phase d'échauffement, et se
+résorbe dès l'epoch 4. L'essentiel de l'adaptation au domaine se joue
+donc dans le premier tiers de l'entraînement, ce qui est cohérent avec
+l'idée que le fine-tuning réutilise des représentations déjà formées
+plutôt qu'il n'en apprend de nouvelles.
+
+\paragraph{Aucun surapprentissage à 50 epochs.}
+Les trois pertes d'entraînement décroissent de façon monotone
+($1{,}347 \rightarrow 0{,}814$ pour la boîte, $2{,}089 \rightarrow
+0{,}611$ pour la classification, $1{,}107 \rightarrow 0{,}932$ pour la
+DFL). Surtout, les pertes de validation atteignent leur minimum en toute
+fin d'entraînement : epoch 50 pour la perte de boîte, 49 pour la
+classification, 46 pour la DFL. L'écart entre pertes d'entraînement et
+de validation ne se creuse à aucun moment, et l'arrêt anticipé
+(\emph{patience} de 15 epochs, \cref{sec-entrainement}) n'a jamais été
+déclenché. Le modèle n'avait donc pas commencé à surapprendre lorsque
+l'entraînement s'est arrêté.
+
+\paragraph{Le budget de calcul, et non la convergence, a fixé l'arrêt.}
+Les deux observations précédentes se combinent en une conclusion
+méthodologique : les 50 epochs constituent une borne que nous avons
+imposée, pas un point d'arrêt que les données auraient dicté. Les
+métriques rapportées au \cref{tab-comparaison} sont donc à lire comme un
+plancher, et non comme le plafond de ce que cette architecture peut
+atteindre sur ce jeu. L'entraînement complet a demandé $54{,}9$ minutes
+sur GPU T4, ce qui laisse une marge confortable pour prolonger
+l'expérience dans le cadre gratuit de Google Colab.
