@@ -6,6 +6,7 @@ import cv2
 from PIL import Image
 import numpy as np
 import os
+import io
 from datetime import datetime
 
 # ============================================
@@ -317,7 +318,8 @@ if mode == "📷 Image":
             if results['standard'] is not None:
                 for r in results['standard']:
                     nb_voitures = len(r.boxes)
-                    st.image(r.plot(), use_container_width=True)
+                    annotated_rgb = cv2.cvtColor(r.plot(), cv2.COLOR_BGR2RGB)
+                    st.image(annotated_rgb, use_container_width=True)
                     
                     col_a, col_b = st.columns(2)
                     with col_a:
@@ -354,7 +356,8 @@ if mode == "📷 Image":
             if results['benin'] is not None:
                 for r in results['benin']:
                     nb_voitures = len(r.boxes)
-                    st.image(r.plot(), use_container_width=True)
+                    annotated_rgb = cv2.cvtColor(r.plot(), cv2.COLOR_BGR2RGB)
+                    st.image(annotated_rgb, use_container_width=True)
                     
                     col_a, col_b = st.columns(2)
                     with col_a:
@@ -427,12 +430,14 @@ if mode == "📷 Image":
         with col1:
             if results['standard'] is not None:
                 for r in results['standard']:
-                    annotated = r.plot()
-                    annotated_pil = Image.fromarray(annotated)
+                    annotated_rgb = cv2.cvtColor(r.plot(), cv2.COLOR_BGR2RGB)
+                    annotated_pil = Image.fromarray(annotated_rgb)
+                    buf = io.BytesIO()
+                    annotated_pil.save(buf, format="JPEG")
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                     st.download_button(
                         label="📦 Télécharger - Modèle Standard",
-                        data=annotated_pil.tobytes(),
+                        data=buf.getvalue(),
                         file_name=f"standard_voitures_{timestamp}.jpg",
                         mime="image/jpeg",
                         use_container_width=True
@@ -441,12 +446,14 @@ if mode == "📷 Image":
         with col2:
             if results['benin'] is not None:
                 for r in results['benin']:
-                    annotated = r.plot()
-                    annotated_pil = Image.fromarray(annotated)
+                    annotated_rgb = cv2.cvtColor(r.plot(), cv2.COLOR_BGR2RGB)
+                    annotated_pil = Image.fromarray(annotated_rgb)
+                    buf = io.BytesIO()
+                    annotated_pil.save(buf, format="JPEG")
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                     st.download_button(
                         label="🇧🇯 Télécharger - Modèle Benin",
-                        data=annotated_pil.tobytes(),
+                        data=buf.getvalue(),
                         file_name=f"benin_voitures_{timestamp}.jpg",
                         mime="image/jpeg",
                         use_container_width=True
