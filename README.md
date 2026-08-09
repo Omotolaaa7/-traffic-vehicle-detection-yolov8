@@ -56,8 +56,12 @@ choix et les sources candidates sont dans [docs/DATASETS.md](docs/DATASETS.md).
 ```
 Projet1/
 ├── README.md
-├── requirements.txt
+├── app.py                      # application Streamlit de démonstration
+├── requirements.txt            # dépendances de l'application (lues au déploiement)
+├── requirements-dev.txt        # dépendances de la chaîne complète
 ├── .gitignore
+├── assets/
+│   └── exemples/               # scènes du jeu de test embarquées dans l'application
 ├── configs/
 │   ├── import.yaml             # jeu source et correspondance des classes
 │   ├── dataset.yaml            # classes et splits (régénéré automatiquement)
@@ -98,8 +102,19 @@ et dans quel ordre.
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
 ```
+
+Deux fichiers de dépendances, et la distinction compte au déploiement :
+
+| Fichier | Contenu | Quand |
+|---|---|---|
+| `requirements.txt` | ce dont `app.py` a besoin | installé automatiquement par Streamlit Community Cloud |
+| `requirements-dev.txt` | le précédent, plus le téléchargement et l'import du jeu | travail local et Colab |
+
+Installez `requirements-dev.txt` en local : il inclut l'autre. Sur le cloud,
+seul `requirements.txt` est lu, ce qui évite d'y installer `datasets` et
+`huggingface_hub`, inutiles à la démonstration.
 
 Le modèle `yolov8n.pt` est déjà présent dans `models/`. Ultralytics le
 télécharge sinon au premier appel, ce qui nécessite une connexion.

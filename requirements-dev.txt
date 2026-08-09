@@ -1,0 +1,10 @@
+# Dépendances de la chaîne de travail complète : téléchargement du jeu
+# BMD-45, import, entraînement, évaluation. À installer en local ou sur
+# Colab, jamais au déploiement.
+#
+#   pip install -r requirements-dev.txt
+
+-r requirements.txt
+
+datasets==5.0.1
+huggingface_hub==1.26.0
