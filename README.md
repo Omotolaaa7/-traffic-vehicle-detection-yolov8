@@ -157,6 +157,24 @@ python scripts/compare_models.py
 python scripts/evaluate.py --model models/yolov8n.pt --split test
 ```
 
+### Application de démonstration
+
+```bash
+streamlit run app.py
+```
+
+L'application [app.py](app.py) compare les deux modèles côte à côte sur une
+image ou une vidéo, avec une ventilation des détections par classe et par
+taille apparente d'objet. Trois scènes du jeu de test sont embarquées dans
+`assets/exemples/` pour que la démo fonctionne sans photo sous la main.
+
+**Déploiement sur Streamlit Community Cloud** : sur
+[share.streamlit.io](https://share.streamlit.io), se connecter avec GitHub,
+« New app », choisir ce dépôt, la branche `main` et le fichier `app.py`.
+Tout le nécessaire est versionné (poids fine-tunés, `requirements.txt` avec
+`opencv-python-headless`, `.python-version`) ; chaque `git push` redéploie
+automatiquement. L'inférence se fait sur CPU : compter 1 à 2 s par image.
+
 ---
 
 ## 8. Classes et comparabilité

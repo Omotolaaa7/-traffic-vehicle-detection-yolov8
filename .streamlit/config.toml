@@ -1,0 +1,4 @@
+[server]
+# Protège la machine de déploiement (1 Go de RAM sur Streamlit Community
+# Cloud) contre les très gros téléversements.
+maxUploadSize = 100
