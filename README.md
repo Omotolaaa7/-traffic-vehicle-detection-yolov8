@@ -5,6 +5,11 @@
 **AMA, Cohorte 2, Projet Intégrateur 1, Groupe 5**
 Aïchatou TRAORE, Benoît DJOSSOU, Andréa AFOUDA
 
+**🚗 Démonstration en ligne : [detection-vehicules-benin.streamlit.app](https://detection-vehicules-benin.streamlit.app)**
+
+Comparez les deux modèles sur vos propres images, ou sur les scènes de test
+embarquées dans l'application. Aucune installation nécessaire.
+
 Document de référence : [Rapport technique](docs/ressources/Rapport_technique_v2.pptx)
 
 ---
@@ -183,12 +188,17 @@ image ou une vidéo, avec une ventilation des détections par classe et par
 taille apparente d'objet. Trois scènes du jeu de test sont embarquées dans
 `assets/exemples/` pour que la démo fonctionne sans photo sous la main.
 
-**Déploiement sur Streamlit Community Cloud** : sur
-[share.streamlit.io](https://share.streamlit.io), se connecter avec GitHub,
-« New app », choisir ce dépôt, la branche `main` et le fichier `app.py`.
-Tout le nécessaire est versionné (poids fine-tunés, `requirements.txt` avec
-`opencv-python-headless`, `.python-version`) ; chaque `git push` redéploie
-automatiquement. L'inférence se fait sur CPU : compter 1 à 2 s par image.
+**L'application est déployée** sur Streamlit Community Cloud, à l'adresse
+[detection-vehicules-benin.streamlit.app](https://detection-vehicules-benin.streamlit.app).
+Elle est reliée à la branche `main` de ce dépôt : chaque `git push` la
+redéploie automatiquement, sans intervention.
+
+Deux points à connaître avant une démonstration. L'inférence tourne sur CPU,
+il faut donc compter 1 à 2 secondes par image, et garder les vidéos courtes
+(moins de 30 secondes, avec le réglage « analyser 1 image sur N » à 2 ou
+plus). Par ailleurs l'offre gratuite met l'application en veille après
+plusieurs jours sans visite, et le réveil demande une trentaine de secondes :
+ouvrez l'adresse quelques minutes avant de présenter.
 
 ---
 
