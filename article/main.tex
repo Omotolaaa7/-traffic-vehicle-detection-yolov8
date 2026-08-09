@@ -4,43 +4,112 @@
 \usepackage[utf8]{inputenc}     % accents directement dans le source
 \usepackage[T1]{fontenc}        % césure correcte des mots accentués
 \usepackage[french]{babel}      % typographie française
-\usepackage{lmodern}
+\usepackage{newtxtext,newtxmath} % police Times moderne, rendu « journal »
 
 % --- Mise en page
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{microtype}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{\small\itshape Détection des véhicules de petite taille
+              en trafic urbain dense}
+\fancyhead[R]{\small\thepage}
+\fancyfoot[C]{}
+\renewcommand{\headrulewidth}{0.4pt}
 
 % --- Sciences
-\usepackage{amsmath, amssymb}
+\usepackage{amsmath}  % amssymb inutile : newtxmath fournit les symboles AMS
 \usepackage{siunitx}
 \sisetup{locale = FR}           % \num{0.438} s'affiche « 0,438 »
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage[font=small,labelfont=bf]{caption}
 \usepackage{subcaption}
 \usepackage{xcolor}
 
+% --- Couleurs du projet (celles de l'application de démonstration)
+\definecolor{bleunuit}{HTML}{0F3460}
+\definecolor{terrecuite}{HTML}{C1502E}
+
+% --- Graphiques
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{positioning, arrows.meta}
+
 % --- Liens et références (hyperref en dernier ou presque)
-\usepackage[hidelinks]{hyperref}
+\usepackage[colorlinks=true, linkcolor=bleunuit, citecolor=bleunuit,
+            urlcolor=terrecuite]{hyperref}
 \usepackage[french,nameinlink]{cleveref}
+\usepackage{qrcode}             % QR code vers la démonstration en ligne
 
 % --- Marqueur des éléments manquants : à faire disparaître avant le rendu
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{[À FAIRE : #1]}}}
 
-\title{Détection des véhicules éloignés, de petite taille et dans les
-       embouteillages en scène de trafic urbain appliquée au contexte
-       béninois : proposition d'amélioration basée sur YOLOv8}
-\author{Aïchatou Traoré \and Benoît Djossou \and Andréa Afouda\\[4pt]
-        \small Académie des Mathématiques Appliquées (Bénin)\\
-        \small Programme d'Introduction à l'IA, Cohorte 2,
-               Projet Intégrateur 1, Groupe 5}
-\date{Août 2026}
-
 \begin{document}
-\maketitle
+
+% ============================ Page de garde ============================
+\begin{titlepage}
+  \centering
+
+  {\scshape Académie des Mathématiques Appliquées (Bénin)\par}
+  \vspace{2pt}
+  {\small Programme d'Introduction à l'IA · Cohorte 2\par}
+  \vspace{10pt}
+  {\color{terrecuite}\rule{\linewidth}{0.8pt}}
+
+  \vfill
+
+  {\LARGE\bfseries Détection des véhicules éloignés, de petite taille\\
+   et dans les embouteillages\par}
+  \vspace{14pt}
+  {\color{terrecuite}\rule{5em}{2.5pt}}
+  \vspace{14pt}
+
+  {\large Scène de trafic urbain appliquée au contexte béninois :\\
+   proposition d'amélioration basée sur YOLOv8\par}
+
+  \vfill
+
+  \begin{minipage}{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/scene1_base.jpg}\\[4pt]
+    {\footnotesize\color{bleunuit}\bfseries AVANT\hspace{0.5em}}%
+    {\footnotesize 4 véhicules détectés}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/scene1_finetune.jpg}\\[4pt]
+    {\footnotesize\color{terrecuite}\bfseries APRÈS\hspace{0.5em}}%
+    {\footnotesize 44 véhicules détectés}
+  \end{minipage}
+
+  \vspace{6pt}
+  {\scriptsize\color{gray} Même scène du jeu de test, avant et après
+   fine-tuning (image \texttt{val\_000556}).\par}
+
+  \vfill
+
+  {\large Aïchatou Traoré · Benoît Djossou · Andréa Afouda\par}
+  \vspace{6pt}
+  {\small Projet Intégrateur 1 · Groupe 5\par}
+  \vspace{14pt}
+  {\color{terrecuite}\rule{\linewidth}{0.8pt}}
+  \vspace{8pt}
+
+  {\small Août 2026\hspace{2em}·\hspace{2em}Démonstration en ligne :
+   \url{https://detection-vehicules-benin.streamlit.app}\par}
+
+\end{titlepage}
+% =======================================================================
 
 \begin{abstract}
 \input{sections/resume}
 \end{abstract}
+
+\medskip
+\noindent\textbf{Mots-clés :} détection d'objets ; YOLOv8 ; fine-tuning ;
+petits objets ; trafic urbain dense ; vidéoprotection.
 
 \input{sections/intro}
 \input{sections/related}

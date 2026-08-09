@@ -9,7 +9,37 @@ réseau de caméras ouvre la voie à la vidéo-verbalisation : un pipeline
 de vision par ordinateur qui enchaîne détection des véhicules, suivi
 multi-objets, détection de plaque d'immatriculation, reconnaissance
 optique de caractères, application de règles d'infraction et restitution
-sur tableau de bord.
+sur tableau de bord (\cref{fig-pipeline}).
+
+\begin{figure}[b]
+  \centering
+  \begin{tikzpicture}[
+      maillon/.style={draw=bleunuit!70, rounded corners=2pt, align=center,
+                      font=\footnotesize, minimum height=10mm,
+                      inner sep=3pt, text width=20mm},
+      vise/.style={draw=terrecuite, thick, fill=terrecuite!10},
+      fleche/.style={->, >={Stealth[length=2mm]}, semithick,
+                     draw=bleunuit!60},
+      node distance=3.5mm]
+    \node[maillon, vise]        (det)   {Détection\\des véhicules};
+    \node[maillon, right=of det]  (suivi) {Suivi\\multi-objets};
+    \node[maillon, right=of suivi] (plaq) {Détection\\de plaques};
+    \node[maillon, right=of plaq]  (ocr)  {Lecture\\optique (OCR)};
+    \node[maillon, right=of ocr]   (regles) {Règles\\d'infraction};
+    \node[maillon, right=of regles] (bord) {Tableau\\de bord};
+    \draw[fleche] (det)    -- (suivi);
+    \draw[fleche] (suivi)  -- (plaq);
+    \draw[fleche] (plaq)   -- (ocr);
+    \draw[fleche] (ocr)    -- (regles);
+    \draw[fleche] (regles) -- (bord);
+    \node[below=1.2mm of det, font=\scriptsize\itshape,
+          text=terrecuite] {ce travail};
+  \end{tikzpicture}
+  \caption{La chaîne de vidéo-verbalisation, du flux caméra au tableau
+  de bord. Ce travail porte sur le premier maillon : un véhicule non
+  détecté est perdu pour toute la suite de la chaîne.}
+  \label{fig-pipeline}
+\end{figure}
 
 \paragraph{Problème.}
 Tout ce pipeline repose sur son premier maillon : si un véhicule n'est
