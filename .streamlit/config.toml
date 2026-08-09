@@ -1,3 +1,13 @@
+[theme]
+# Palette « chaleur et encre » : fond crème, texte bleu nuit (la couleur
+# d'identité du projet), accent terre cuite pour les actions et le récit
+# avant / après du fine-tuning.
+base = "light"
+primaryColor = "#C1502E"
+backgroundColor = "#FBF7F0"
+secondaryBackgroundColor = "#F3ECDF"
+textColor = "#1A1A2E"
+
 [server]
 # Protège la machine de déploiement (1 Go de RAM sur Streamlit Community
 # Cloud) contre les très gros téléversements.
